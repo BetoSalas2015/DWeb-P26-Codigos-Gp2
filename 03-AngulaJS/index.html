@@ -7,16 +7,44 @@
     <title>AngularJS</title>
 </head>
 <body ng-controller="miControlador">
-    <h1>Lista de Tareas</h1>
+    <h1>Gestor de Tareas</h1>
     
      <input type="text" ng-model="nuevaTarea" placeholder="Introduce una nueva tarea">
-     <p>Estas escribiendo: {{ nuevaTarea }} </p>
 
-    <ul>
-        <li ng-repeat="tarea in tareas"> {{ tarea }} </li>
-    </ul>
+     <select ng-model="nuevaPrioridad">
+        <option value="" disabled selected>Prioridad</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+     </select>
+
+     <button ng-click="agregarTarea()">Agregar tarea</button>
+
+    <table border="1">
+        <tr>
+            <th>Tarea</th>
+            <th>Prioridad</th>
+            <th>Acción</th>
+        </tr>
+        <tr ng-repeat="tarea in tareas | orderBy: 'prioridad'">
+            <td> {{tarea.tarea}} </td>
+            <td> {{tarea.prioridad}} </td>
+            <td> <button ng-Click="eliminarTarea($index)">Eliminar tarea</button> </td>
+        </tr>
+    </table>
+    
 
     <p>Total Tareas: {{ totalTareas }} </p>
+
+    <h3>Buscar</h3>
+    <input type="text" ng-model="busqueda" ng-init="busqueda = ''" >
+    <ul>
+        <li ng-repeat="tarea in tareas | filter: busqueda">
+            {{ tarea.tarea }}
+        </li>
+    </ul>
+
+
     <script src="js/app.js"></script>
 </body>
 </html>
